@@ -14,6 +14,6 @@ python3 -m pip install -r requirements.txt
 | --- | --- | --- |
 | `platform_mac/camera_mac.py` | `python3 platform_mac/camera_mac.py` | Opens the MacBook webcam and shows a live preview. Press `q` or Escape to exit. |
 | `platform_mac/live_detector_test.py` | `python3 platform_mac/live_detector_test.py` | Shows live ball-detection overlays, including the initial ROI, centroid, confidence, trajectory, and Kalman prediction gate. |
-| `platform_mac/run_mac.py` | `python3 platform_mac/run_mac.py` | Runs one full capture → detect → trajectory → decision → JSON-output shot pipeline. |
+| `platform_mac/run_mac.py` | `python3 platform_mac/run_mac.py` | Runs one full capture → detect → trajectory → decision → JSON-output shot pipeline. (Does not provide camera feed) |
 
 For QNX installation, camera setup, the CPython camera bridge, preflight checks, and execution, see [platform_qnx/SETUP.md](platform_qnx/SETUP.md).
