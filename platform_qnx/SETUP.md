@@ -1,35 +1,37 @@
-# QNX Camera Module 3 setup
+# QNX setup
 
-QNX on Raspberry Pi uses **Sensor Framework**, not V4L2, for the CSI-connected
-Camera Module 3. Enable the Module 3 configuration and start the service using
-the `sensor` command with `camera_module3.conf`; validate it first with
-`camera_example3_viewfinder`. The QNX target image must include the Camera
-Library (`libcamapi`) and Sensor Framework camera support. These are QNX SDP /
-Quick Start Target Image components obtained through QNX Software Center, not
-Python packages and not an `oss.qnx.com` download.
+1. Build and boot the QNX Raspberry Pi image with Sensor Framework and Camera Module 3 support. Confirm the camera using `camera_example3_viewfinder`.
 
-The repository includes that target-local binding as a CPython extension:
-`platform_qnx/_sensor_camera.c`. It uses the Camera API viewfinder callback,
-copies the latest NV12 frame, and returns it to `QNXCamera`, which converts it
-to BGR before core detection runs. Build it on the QNX SDK host after sourcing
-the QNX environment:
+2. On the QNX target, install the runtime modules:
 
-```sh
-CC=qcc python3 platform_qnx/setup_qnx_adapter.py build_ext --inplace
-```
+   ```sh
+   apk add opencv opencv-dev python3-numpy
+   ```
 
-Copy the generated `platform_qnx/_sensor_camera.*.so` into the same directory
-on the target. No separate adapter project, V4L2 driver, or Python package is
-required. A native build is unavoidable because QNX exposes this camera API as
-C headers and `libcamapi`, not a Python module.
+3. On the QNX target, record the Python ABI values:
 
-Install Python packages from QNX's externally-managed repository, never with
-global `pip`. First verify the exact names available on the target, then install
-the logical dependencies with commands such as `apk add opencv`.
+   ```sh
+   python3 -c 'import sysconfig; print(sysconfig.get_config_var("INCLUDEPY")); print(sysconfig.get_config_var("LIBDIR")); print(sysconfig.get_config_var("LDLIBRARY")); print(sysconfig.get_config_var("EXT_SUFFIX"))'
+   ```
 
-Before running the goalkeeper pipeline, verify Sensor Framework actually
-negotiates and sustains its active mode through Python conversion and the
-detector. `QNXCamera` adopts the negotiated mode by default; set its
-`require_requested_mode=True` only if you need strict enforcement of the
-configured `1536x864 @ 120fps` target. The documented fallback remains
-`2304x1296 @ 56fps` if you later need a fixed lower-rate configuration.
+4. On the QNX SDK host, source `qnxsdp-env.sh`. Set `QNX_PYTHON_INCLUDE` and `QNX_PYTHON_LIBDIR` to the corresponding **host-side QNX sysroot paths**, set `QNX_PYTHON_LIBRARY` to `LDLIBRARY` without `lib`/`.so`, and set `QNX_PYTHON_EXT_SUFFIX` to `EXT_SUFFIX`.
+
+5. On the QNX SDK host, build the matching AArch64 extension:
+
+   ```sh
+   python3 platform_qnx/setup_qnx_adapter.py
+   ```
+
+6. Copy the generated `platform_qnx/_sensor_camera*.so` and the project to the QNX target.
+
+7. On the QNX target, verify capture and BGR conversion:
+
+   ```sh
+   python3 -m platform_qnx.preflight_qnx
+   ```
+
+8. Run one live shot:
+
+   ```sh
+   python3 -m platform_qnx.run_qnx
+   ```
