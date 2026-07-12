@@ -1,6 +1,6 @@
-# Reflex Keeper
+# Reactive Keeper
 
-Reflex Keeper is a real-time simulated goalkeeper that detects a penalty ball, estimates its trajectory, and emits a left, center, or right dive decision within a reaction budget. The shared core is platform-neutral; macOS is the development target, while QNX is the deterministic deployment target.
+Reactive Keeper is a real-time simulated goalkeeper that detects when a soccer ball is shot, estimates its trajectory, and emits a left, center, or right dive decision within a reaction budget. The shared core is platform-neutral; macOS is the development target, while QNX is the deterministic deployment target.
 
 ## macOS commands
 
