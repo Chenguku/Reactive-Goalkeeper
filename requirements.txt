@@ -1,0 +1,4 @@
+# macOS development and test dependencies. QNX uses apk packages instead.
+numpy
+opencv-python
+pytest
