@@ -25,7 +25,7 @@ C headers and `libcamapi`, not a Python module.
 
 Install Python packages from QNX's externally-managed repository, never with
 global `pip`. First verify the exact names available on the target, then install
-the logical dependencies with commands such as `apk add py3-numpy py3-opencv`.
+the logical dependencies with commands such as `apk add opencv`.
 
 Before running the goalkeeper pipeline, verify Sensor Framework actually
 negotiates and sustains its active mode through Python conversion and the

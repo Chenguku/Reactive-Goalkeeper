@@ -64,7 +64,7 @@ Rendering is explicitly out of that pipeline — see "Out of scope" below.
 
 - Python 3.x. Minimal dependencies: opencv-python, numpy. On the QNX target,
   Python is externally managed (PEP 668) — install packages with
-  `apk add py3-<name>` (Alpine Package Keeper, ported to QNX for the
+  `apk add <name>` (Alpine Package Keeper, ported to QNX for the
   Developer Desktop), not pip. Check availability there before adding
   anything new — don't assume a pip package exists as an apk package too.
 - `requirements.txt` at the repo root is the Mac/pip install path only —
