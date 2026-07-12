@@ -1,5 +1,7 @@
 # QNX setup
 
+Note: Steps 3–6 build and deploy the CPython camera adapter. QNX Sensor Framework streams the CSI camera through its C Camera API, but it does not provide those frames directly as Python/NumPy arrays. The adapter copies its NV12 viewfinder frames into Python so `QNXCamera` can convert them to BGR for the shared detector.
+
 1. Build and boot the QNX Raspberry Pi image with Sensor Framework and Camera Module 3 support. Confirm the camera using `camera_example3_viewfinder`.
 
 2. On the QNX target, install the runtime modules:
