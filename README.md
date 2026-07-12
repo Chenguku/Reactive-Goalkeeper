@@ -2,6 +2,8 @@
 
 Reactive Keeper is a real-time simulated goalkeeper that detects when a soccer ball is shot, estimates its trajectory, and emits a left, center, or right dive decision within a reaction budget. The shared core is platform-neutral; macOS is the development target, while QNX is the deterministic deployment target.
 
+Note: The computer vision program is tuned to a ball that has red on it and will usually detect red points on the ball as the ball.
+
 ## macOS commands
 
 Install the Mac development dependencies first:
