@@ -9,7 +9,12 @@ import subprocess
 import sys
 
 
-REQUIRED_ENVIRONMENT = ("QNX_PYTHON_INCLUDE",)
+REQUIRED_ENVIRONMENT = (
+    "QNX_PYTHON_INCLUDE",
+    "QNX_PYTHON_LIBDIR",
+    "QNX_PYTHON_LIBRARY",
+    "QNX_PYTHON_EXT_SUFFIX",
+)
 
 
 def main() -> None:
@@ -18,8 +23,8 @@ def main() -> None:
     if missing:
         names = ", ".join(missing)
         raise SystemExit(
-            f"Missing {names}. Set it to the host-side QNX sysroot directory containing Python.h. "
-            "See platform_qnx/BUILD_ADAPTER.md."
+            f"Missing {names}. Set these to host-side paths/names for the target Python ABI. "
+            "See platform_qnx/SETUP.md."
         )
     qcc = shutil.which("qcc")
     if qcc is None:
@@ -27,7 +32,7 @@ def main() -> None:
 
     root = Path(__file__).resolve().parents[1]
     source = root / "platform_qnx" / "_sensor_camera.c"
-    output = root / "platform_qnx" / "_sensor_camera.abi3.so"
+    output = root / "platform_qnx" / f"_sensor_camera{os.environ['QNX_PYTHON_EXT_SUFFIX']}"
     target = os.environ.get("QNX_QCC_TARGET", "gcc_ntoaarch64le")
     command = [
         qcc,
@@ -35,8 +40,10 @@ def main() -> None:
         "-shared",
         "-fPIC",
         f"-I{os.environ['QNX_PYTHON_INCLUDE']}",
+        f"-L{os.environ['QNX_PYTHON_LIBDIR']}",
         str(source),
         "-lcamapi",
+        f"-l{os.environ['QNX_PYTHON_LIBRARY']}",
         "-o",
         str(output),
     ]

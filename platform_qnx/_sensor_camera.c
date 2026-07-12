@@ -1,6 +1,5 @@
 /* CPython binding for QNX Sensor Framework Camera API (NV12 viewfinder). */
 #define PY_SSIZE_T_CLEAN
-#define Py_LIMITED_API 0x03080000
 #include <Python.h>
 #include <camera/camera_api.h>
 #include <pthread.h>
