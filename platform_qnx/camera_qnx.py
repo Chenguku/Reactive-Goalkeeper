@@ -61,8 +61,8 @@ class SensorFrameworkSource:
         except ImportError as error:
             raise RuntimeError(
                 "The QNX Camera API extension is not built. On a QNX SDK host, run "
-                "`python3 platform_qnx/setup_qnx_adapter.py build_ext --inplace`, then copy "
-                "the resulting _sensor_camera module to the target image."
+                "the release build described in platform_qnx/BUILD_ADAPTER.md, then include "
+                "the resulting _sensor_camera.abi3.so in the target release bundle."
             ) from error
         self._native = _sensor_camera
         self._handle: object | None = None
