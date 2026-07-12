@@ -42,3 +42,13 @@ MAC_CAMERA_FPS = 30
 # QNX CSI camera settings. Confirm sustainable end-to-end capture performance.
 QNX_CAMERA_RESOLUTION = (1536, 864)
 QNX_CAMERA_FPS = 120
+QNX_CAMERA_UNIT = 1
+QNX_CAMERA_PIXEL_FORMAT = "NV12"
+QNX_FALLBACK_CAMERA_RESOLUTION = (2304, 1296)
+QNX_FALLBACK_CAMERA_FPS = 56
+
+# QNX scheduling settings. These remain within QNX's default unprivileged
+# priority ceiling; target images may choose different values after profiling.
+QNX_CAPTURE_PRIORITY = 20
+QNX_DECISION_PRIORITY = 60
+QNX_DECISION_POLL_INTERVAL_MS = 1.0
